@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:meal_app/screens/category_screen.dart';
 import 'package:meal_app/screens/favourite_screen.dart';
+import 'package:meal_app/widgets/main_drawer.dart';
+
+import 'category_screen.dart';
+import 'category_screen.dart';
+import 'favourite_screen.dart';
+import 'favourite_screen.dart';
 
 class TabsScreen extends StatefulWidget {
   @override
@@ -8,32 +14,48 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
+  int _pageIndex = 0;
+  final List<Map<String, Object>> _pages= [
+   {'Page' : CategoryScreen(),
+     'title' : 'Category',
+   },
+    {'Page' : FavouriteScreen(),
+      'title' : 'Favourite',
+    }
+  ];
+  void _selectedPage(int index){
+    setState(() {
+      _pageIndex = index;
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-            title: Text('Meals'),
-            bottom: TabBar(
-              tabs: <Widget>[
-                Tab(
-                  icon: Icon(Icons.category),
-                  text: 'Category',
-                ),
-                Tab(
-                  icon: Icon(Icons.favorite),
-                  text: 'Favourites',
-                ),
-              ],
-            )),
-        body: TabBarView(
-          children: <Widget>[
-            CategoryScreen(),
-            FavouriteScreen(),
-          ],
-        ),
+    return Scaffold(
+      drawer: MainDrawer(),
+      appBar: AppBar(
+        title: Text(_pages[_pageIndex]['title']),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: _selectedPage,
+        selectedItemColor: Colors.white70,
+        unselectedItemColor: Colors.black45,
+        currentIndex: _pageIndex,
+        type: BottomNavigationBarType.shifting,
+        items: [
+          BottomNavigationBarItem(
+            backgroundColor:Theme.of(context).primaryColor,
+            icon: Icon(Icons.category),
+            title: Text('Category'),
+          ),
+          BottomNavigationBarItem(
+    backgroundColor: Theme.of(context).primaryColor,
+            icon: Icon(Icons.favorite),
+            title: Text('Favourite'),
+          ),
+        ],
+        backgroundColor: Theme.of(context).primaryColor,
+      ),
+      body: _pages[_pageIndex]['Page'],
     );
   }
 }
