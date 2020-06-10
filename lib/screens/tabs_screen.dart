@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:meal_app/models/meal.dart';
 import 'package:meal_app/screens/category_screen.dart';
 import 'package:meal_app/screens/favourite_screen.dart';
 import 'package:meal_app/widgets/main_drawer.dart';
+import 'category_screen.dart';
+import 'favourite_screen.dart';
 
-import 'category_screen.dart';
-import 'category_screen.dart';
-import 'favourite_screen.dart';
-import 'favourite_screen.dart';
 
 class TabsScreen extends StatefulWidget {
+  static const routeName = '/tabScreen';
+  final List<Meal> favouriteMeal;
+  TabsScreen({this.favouriteMeal});
   @override
   _TabsScreenState createState() => _TabsScreenState();
 }
@@ -19,7 +21,7 @@ class _TabsScreenState extends State<TabsScreen> {
    {'Page' : CategoryScreen(),
      'title' : 'Category',
    },
-    {'Page' : FavouriteScreen(),
+    {'Page' : FavouriteScreen(widget.favouriteMeal),
       'title' : 'Favourite',
     }
   ];

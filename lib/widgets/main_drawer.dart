@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import '../models/meal.dart';
 import '../screens/fileter_screen.dart';
 import '../constraints/constraints.dart';
 import '../screens/tabs_screen.dart';
-import 'package:meal_app/dummy_data.dart';
 
 class MainDrawer extends StatefulWidget {
   @override
@@ -12,22 +10,6 @@ class MainDrawer extends StatefulWidget {
 
 class _MainDrawerState extends State<MainDrawer> {
 
-  Map<String, bool> _filters = {
-    'gluten': false,
-    'lactose': false,
-    'vegan': false,
-    'vegetarians': false,
-  };
-  List<Meal> availableMeals = DUMMY_MEALS;
-
-  void _setFilter(Map<String, bool> filterData){
-      setState(() {
-        _filters = filterData;
-        availableMeals = DUMMY_MEALS.where((element) {
-
-        }).toList();
-      });
-  }
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -67,9 +49,7 @@ class _MainDrawerState extends State<MainDrawer> {
               style: kTitle,
             ),
             onTap: (){
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                return FilterScreen(_setFilter);
-              }));
+              Navigator.pushReplacementNamed(context, FilterScreen.routeName);
             },
           ),
           ListTile(
@@ -81,9 +61,7 @@ class _MainDrawerState extends State<MainDrawer> {
               ),
             ),
             onTap: (){
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_){
-                return TabsScreen();
-              }));
+              Navigator.pushReplacementNamed(context, TabsScreen.routeName);
             },
           ),
         ],

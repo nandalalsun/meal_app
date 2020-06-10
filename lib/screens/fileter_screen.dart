@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:meal_app/screens/tabs_screen.dart';
 import 'package:meal_app/widgets/main_drawer.dart';
-
 import '../constraints/constraints.dart';
 
 class FilterScreen extends StatefulWidget {
-  final Function setFilter;
-  FilterScreen(this.setFilter);
+  static const routeName = '/filterScreen';
+  final Function _setFilter;
+  final Map<String, bool> currentFilter;
+  FilterScreen( this.currentFilter, this._setFilter,);
   @override
   _FilterScreenState createState() => _FilterScreenState();
 }
 
 class _FilterScreenState extends State<FilterScreen> {
+
   bool _isGluttonFree = false;
   bool _isVegan = false;
   bool _isLactoseFree = false;
@@ -24,6 +27,15 @@ class _FilterScreenState extends State<FilterScreen> {
       subtitle: Text(subtitle),
       onChanged: updateValue,
     );
+  }
+
+  @override
+  void initState() {
+    _isGluttonFree = widget.currentFilter['gluten'];
+    _isVeg = widget.currentFilter['vegetarians'];
+    _isVegan = widget.currentFilter['vegan'];
+    _isLactoseFree = widget.currentFilter['lactose'];
+    super.initState();
   }
 
   @override
@@ -73,7 +85,16 @@ class _FilterScreenState extends State<FilterScreen> {
 
              FlatButton(
               color: Colors.pink[300],
-              onPressed: widget.setFilter,
+              onPressed: (){
+                final selectedFilter = {
+                  'gluten': _isGluttonFree,
+                  'lactose': _isLactoseFree,
+                  'vegan': _isVegan,
+                  'vegetarians': _isVeg,
+                };
+                widget._setFilter(selectedFilter);
+                Navigator.pushReplacementNamed(context, TabsScreen.routeName);
+              },
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Text('Save Filter', style: kTitle,),

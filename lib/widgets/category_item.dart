@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meal_app/constraints/constraints.dart';
+import 'package:meal_app/screens/category_meal_screen.dart';
 
 class CategoryItem extends StatelessWidget {
   final String title;
@@ -9,11 +10,8 @@ class CategoryItem extends StatelessWidget {
   CategoryItem({this.title, this.color, this.id});
 
   void gotoNewPage(BuildContext ctx) {
-    // Navigator.of(ctx).push(MaterialPageRoute(builder:(_){
-    //   return CategoryMealScreen(id, title);
-    // }),);
     Navigator.of(ctx).pushNamed(
-      '/category-items',
+      CategoryMealScreen.routeName,
       arguments: {'id': id, 'title': title}, );
   }
 
